@@ -1,0 +1,15 @@
+D:\3_Tier_Architecture\Data_Access_Layer\bin\Debug\net5.0\Repository.deps.json
+D:\3_Tier_Architecture\Data_Access_Layer\bin\Debug\net5.0\Repository.runtimeconfig.json
+D:\3_Tier_Architecture\Data_Access_Layer\bin\Debug\net5.0\Repository.runtimeconfig.dev.json
+D:\3_Tier_Architecture\Data_Access_Layer\bin\Debug\net5.0\Repository.dll
+D:\3_Tier_Architecture\Data_Access_Layer\bin\Debug\net5.0\Repository.pdb
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.csproj.AssemblyReference.cache
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.AssemblyInfoInputs.cache
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.AssemblyInfo.cs
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.csproj.CoreCompileInputs.cache
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.dll
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\refint\Repository.dll
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.pdb
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\Repository.genruntimeconfig.cache
+D:\3_Tier_Architecture\Data_Access_Layer\obj\Debug\net5.0\ref\Repository.dll

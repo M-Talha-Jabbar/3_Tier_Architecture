@@ -1,0 +1,15 @@
+D:\3_Tier_Architecture\Business_Logic_Layer\bin\Debug\net5.0\Service.deps.json
+D:\3_Tier_Architecture\Business_Logic_Layer\bin\Debug\net5.0\Service.dll
+D:\3_Tier_Architecture\Business_Logic_Layer\bin\Debug\net5.0\Service.pdb
+D:\3_Tier_Architecture\Business_Logic_Layer\bin\Debug\net5.0\Repository.dll
+D:\3_Tier_Architecture\Business_Logic_Layer\bin\Debug\net5.0\Repository.pdb
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.csproj.AssemblyReference.cache
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.AssemblyInfoInputs.cache
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.AssemblyInfo.cs
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.csproj.CoreCompileInputs.cache
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.csproj.CopyComplete
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.dll
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\refint\Service.dll
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\Service.pdb
+D:\3_Tier_Architecture\Business_Logic_Layer\obj\Debug\net5.0\ref\Service.dll
