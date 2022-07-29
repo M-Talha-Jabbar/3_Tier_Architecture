@@ -9,11 +9,11 @@ namespace Service.Contracts
 {
     public interface IStudentService
     {
-        List<StudentModel> GetAll();
-        StudentModel GetById(int id);
-        void Insert(StudentModel student);
-        void Update(StudentModel student);
+        List<StudentViewModel> GetAll();
+        StudentViewModel GetById(int id);
+        void Insert(StudentViewModel student);
+        void Update(StudentViewModel student);
         void Delete(int id);
-        List<StudentModel> GetStudentsByName(string name);
+        List<StudentViewModel> GetStudentsByName(string name);
     }
 }

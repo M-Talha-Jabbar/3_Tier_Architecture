@@ -18,9 +18,9 @@ namespace Service.Services
             _studentRepository = studentRepository;
         }
 
-        public List<StudentModel> GetAll()
+        public List<StudentViewModel> GetAll()
         {
-            var students = _studentRepository.GetAll().Select(stud => new StudentModel()
+            var students = _studentRepository.GetAll().Select(stud => new StudentViewModel()
             {
                 StudentId = stud.StudentId,
                 StudentName = stud.StudentName,
@@ -30,11 +30,11 @@ namespace Service.Services
             return students;
         }
 
-        public StudentModel GetById(int id)
+        public StudentViewModel GetById(int id)
         {
             var student = _studentRepository.GetById(id);
 
-            var studentModel = new StudentModel()
+            var studentModel = new StudentViewModel()
             {
                 StudentId = student.StudentId,
                 StudentName = student.StudentName,
@@ -43,12 +43,12 @@ namespace Service.Services
             return studentModel;
         }
 
-        public void Insert(StudentModel student)
+        public void Insert(StudentViewModel student)
         {
 
         }
 
-        public void Update(StudentModel student)
+        public void Update(StudentViewModel student)
         {
 
         }
@@ -58,9 +58,9 @@ namespace Service.Services
 
         }
 
-        public List<StudentModel> GetStudentsByName(string name)
+        public List<StudentViewModel> GetStudentsByName(string name)
         {
-            var students = _studentRepository.GetStudentsByName(name).Select(stud => new StudentModel()
+            var students = _studentRepository.GetStudentsByName(name).Select(stud => new StudentViewModel()
             {
                 StudentId = stud.StudentId,
                 StudentName = stud.StudentName,
