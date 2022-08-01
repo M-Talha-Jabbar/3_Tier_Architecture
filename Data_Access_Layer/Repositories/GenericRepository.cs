@@ -20,12 +20,12 @@ namespace Repository.Repositories
             entity = _context.Set<T>();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
             return await entity.ToListAsync();
         }
 
-        public async Task<T> GetById(object id)
+        public async Task<T> GetByIdAsync(object id)
         {
             return await entity.FindAsync(id);
         }
@@ -40,9 +40,10 @@ namespace Repository.Repositories
             entity.Update(obj);
         }
 
-        public async Task Delete(object id)
+        public async Task DeleteAsync(object id)
         {
-            T existing = await entity.FindAsync(id);
+            // T existing = await entity.FindAsync(id);
+            T existing = await GetByIdAsync(id);
             entity.Remove(existing);
         }
 

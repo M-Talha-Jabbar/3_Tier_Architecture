@@ -49,7 +49,6 @@ D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.GeneratedMSBuildEditorConfig.edi
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.AssemblyInfoInputs.cache
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.AssemblyInfo.cs
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.csproj.CoreCompileInputs.cache
-D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cs
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cache
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.Manifest.cache
@@ -62,3 +61,7 @@ D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.genruntimeconfig.cache
 D:\3_Tier_Architecture\API\obj\Debug\net5.0\ref\API.dll
 D:\3_Tier_Architecture\API\bin\Debug\net5.0\Humanizer.dll
 D:\3_Tier_Architecture\API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\3_Tier_Architecture\API\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\3_Tier_Architecture\API\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\3_Tier_Architecture\API\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+D:\3_Tier_Architecture\API\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cs

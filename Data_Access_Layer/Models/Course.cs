@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Repository.Models
@@ -10,7 +11,7 @@ namespace Repository.Models
     {
         public int CourseId { get; set; }
         public string CourseName { get; set; }
-        public ICollection<Student> Students { get; set; }
-        public ICollection<Teacher> Teachers { get; set; }
+        public List<Student> Students { get; set; }
+        public List<Teacher> Teachers { get; set; }
     }
 }

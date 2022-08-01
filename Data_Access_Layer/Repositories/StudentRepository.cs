@@ -16,9 +16,33 @@ namespace Repository.Repositories
         {
         }
 
-        public async Task<List<Student>> GetStudentsByName(string Name)
+        public async Task<List<Student>> GetStudentsByNameAsync(string Name)
         {
-            return await _context.Students.Where(stud => stud.StudentName == Name).ToListAsync();
+            return await _context.Students
+                                .Where(stud => stud.StudentName == Name)
+                                .ToListAsync();
+        }
+
+        public async Task<Student> GetStudentCoursesByIdAsync(int id)
+        {
+            return await _context.Students
+                                .Where(stud => stud.StudentId == id)
+                                .Include(stud => stud.Courses)
+                                .FirstOrDefaultAsync();
+        }
+
+        public async Task RegisterACourseAsync(int StudentId, int CourseId)
+        {
+            var course = await _context.Courses.FindAsync(CourseId);
+
+            var student = await _context.Students
+                                    .Where(stud => stud.StudentId == StudentId)
+                                    .Include(stud => stud.Courses)
+                                    .FirstOrDefaultAsync();
+
+            student.Courses.Add(course);
+            
+            _context.Students.Update(student);
         }
     }
 }

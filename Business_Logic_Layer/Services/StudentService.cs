@@ -19,53 +19,52 @@ namespace Service.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<List<StudentCoursesViewModel>> GetAll()
+        public async Task<List<StudentViewModel>> GetAllStudentsAsync()
         {
-            var students = await _studentRepository.GetAll().Select(stud => new StudentCoursesViewModel()
+            var res = await _studentRepository.GetAllAsync(); // Since this return an Task so you can't directly chain LINQ until promise is resolved and you get the result.
+
+            var students = res.Select(stud => new StudentViewModel()
             {
                 StudentId = stud.StudentId,
                 StudentName = stud.StudentName,
-                Courses = stud.Courses,
-            }).ToListAsync();
+            }).ToList();
 
             return students;
         }
 
-        public async Task<StudentCoursesViewModel> GetById(int id)
+        public async Task<StudentViewModel> GetStudentByIdAsync(int id)
         {
-            var student = await _studentRepository.GetById(id);
+            var student = await _studentRepository.GetByIdAsync(id);
 
-            var studentCourses = new StudentCoursesViewModel()
+            var studentCourses = new StudentViewModel()
             {
                 StudentId = student.StudentId,
                 StudentName = student.StudentName,
-                Courses = student.Courses
             };
 
             return studentCourses;
         }
 
-        public async Task Insert(StudentCoursesViewModel student)
+        public async Task<int> AddStudentAsync(StudentViewModel student)
         {
             var newStudent = new Student()
             {
-                StudentId = student.StudentId,
                 StudentName = student.StudentName,
-                Courses = student.Courses
             };
 
             _studentRepository.Insert(newStudent);
 
             await _studentRepository.SaveAsync();
+
+            return newStudent.StudentId;
         }
 
-        public async Task Update(StudentCoursesViewModel student)
+        public async Task UpdateStudentAsync(int id, StudentViewModel student)
         {
             var updateStudent = new Student()
             {
-                StudentId = student.StudentId,
+                StudentId = id,
                 StudentName = student.StudentName,
-                Courses = student.Courses
             };
 
             _studentRepository.Update(updateStudent);
@@ -73,23 +72,49 @@ namespace Service.Services
             await _studentRepository.SaveAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteStudentAsync(int id)
         {
-            await _studentRepository.Delete(id);
+            await _studentRepository.DeleteAsync(id);
 
             await _studentRepository.SaveAsync();
         }
 
-        public async Task<List<StudentCoursesViewModel>> GetStudentsByName(string name)
+        public async Task<List<StudentViewModel>> GetStudentsByNameAsync(string name)
         {
-            var students = await _studentRepository.GetStudentsByName(name).Select(stud => new StudentCoursesViewModel()
+            var res = await _studentRepository.GetStudentsByNameAsync(name);
+            
+            var students = res.Select(stud => new StudentViewModel()
             {
                 StudentId = stud.StudentId,
                 StudentName = stud.StudentName,
-                Courses = stud.Courses
-            }).ToListAsync();
+            }).ToList();
 
             return students;
+        }
+
+        public async Task<StudentViewModel> GetStudentCoursesByIdAsync(int id)
+        {
+            var res = await _studentRepository.GetStudentCoursesByIdAsync(id);
+
+            var studentCourses = new StudentViewModel()
+            {
+                StudentId = res.StudentId,
+                StudentName = res.StudentName,
+                Courses = res.Courses.Select(c => new CourseViewModel()
+                {
+                    CourseId = c.CourseId,
+                    CourseName = c.CourseName,
+                }).ToList()
+            };
+
+            return studentCourses;
+        }
+
+        public async Task EnrollStudentInACourseAsync(int StudentId, int CourseId)
+        {
+            await _studentRepository.RegisterACourseAsync(StudentId, CourseId);
+
+            await _studentRepository.SaveAsync();
         }
     }
 }

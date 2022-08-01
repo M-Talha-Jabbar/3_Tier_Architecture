@@ -10,6 +10,6 @@ namespace Repository.Models
     {
         public int StudentId { get; set; }
         public string StudentName { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public List<Course> Courses { get; set; }
     }
 }
