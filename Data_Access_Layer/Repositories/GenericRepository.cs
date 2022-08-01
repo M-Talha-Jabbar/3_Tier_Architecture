@@ -12,43 +12,43 @@ namespace Repository.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         public readonly SchoolDBContext _context;
-        public readonly DbSet<T> table;
+        public readonly DbSet<T> entity;
 
         public GenericRepository(SchoolDBContext context)
         {
             _context = context;
-            table = _context.Set<T>();
+            entity = _context.Set<T>();
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            return table.ToList();
+            return await entity.ToListAsync();
         }
 
-        public T GetById(object id)
+        public async Task<T> GetById(object id)
         {
-            return table.Find(id);
+            return await entity.FindAsync(id);
         }
 
         public void Insert(T obj)
         {
-            table.Add(obj);
+            entity.Add(obj);
         }
 
         public void Update(T obj)
         {
-            table.Update(obj);
+            entity.Update(obj);
         }
 
-        public void Delete(object id)
+        public async Task Delete(object id)
         {
-            T existing = table.Find(id);
-            table.Remove(existing);
+            T existing = await entity.FindAsync(id);
+            entity.Remove(existing);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

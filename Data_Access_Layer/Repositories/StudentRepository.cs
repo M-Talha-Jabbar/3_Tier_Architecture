@@ -1,4 +1,5 @@
-﻿using Repository.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Repository.Contracts;
 using Repository.Data;
 using Repository.Models;
 using System;
@@ -15,9 +16,9 @@ namespace Repository.Repositories
         {
         }
 
-        public List<Student> GetStudentsByName(string Name)
+        public async Task<List<Student>> GetStudentsByName(string Name)
         {
-            return _context.Students.Where(stud => stud.StudentName == Name).ToList();
+            return await _context.Students.Where(stud => stud.StudentName == Name).ToListAsync();
         }
     }
 }

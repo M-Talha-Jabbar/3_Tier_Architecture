@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -15,9 +16,9 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_studentService.GetAll());
+            return Ok(await _studentService.GetAll());
         }
     }
 }

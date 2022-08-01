@@ -9,6 +9,6 @@ namespace Repository.Contracts
 {
     public interface IStudentRepository : IGenericRepository<Student>
     {
-        List<Student> GetStudentsByName(string Name);
+        Task<List<Student>> GetStudentsByName(string Name);
     }
 }
