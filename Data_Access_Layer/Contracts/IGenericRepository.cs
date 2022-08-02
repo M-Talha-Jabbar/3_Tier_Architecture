@@ -14,5 +14,7 @@ namespace Repository.Contracts
         void Update(T obj);
         Task DeleteAsync(object id);
         Task SaveAsync();
+        IQueryable<T> GetQuerable();
+        IQueryable<I> GetQueryable<I>() where I : class;
     }
 }

@@ -20,6 +20,16 @@ namespace Repository.Repositories
             entity = _context.Set<T>();
         }
 
+        public IQueryable<T> GetQuerable() // returning known type
+        {
+            return entity;
+        }
+
+        public IQueryable<I> GetQueryable<I>() where I : class // returning an unknown type
+        {
+            return _context.Set<I>();
+        }
+
         public async Task<List<T>> GetAllAsync()
         {
             return await entity.ToListAsync();
