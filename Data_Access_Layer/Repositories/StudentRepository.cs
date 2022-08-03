@@ -41,8 +41,10 @@ namespace Repository.Repositories
                                     .FirstOrDefaultAsync();
 
             student.Courses.Add(course);
-            
-            _context.Students.Update(student);
+
+            // _context.Students.Update(student);
+            // OR
+            Update(student); 
         }
     }
 }

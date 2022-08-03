@@ -43,6 +43,7 @@ namespace API
             services.AddScoped<IStudentRepository, StudentRepository>();
 
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ITeacherService, TeacherService>();
 
             services.AddSwaggerGen(c =>
             {

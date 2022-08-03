@@ -49,12 +49,13 @@ namespace Service.Services
 
             var teacher = await _teacherRepository.GetQuerable()
                                             .Where(t => t.TeacherId == TeacherId)
+                                            .Include(t => t.Courses)
                                             .FirstOrDefaultAsync();
 
             teacher.Courses.Add(course);
 
-            // we can't do 
-            // _teacherRepository.GetQuerable().Update(teacher); // b/c GetQuerable() has converted the DbSet type into IQuerable type and Update() is the method of DbSet type.
+            // we can't do this:
+            // _teacherRepository.GetQuerable().Update(teacher); // b/c GetQuerable() has converted the DbSet type into IQuerable type implicitly and Update() is the method of DbSet type.
 
             _teacherRepository.Update(teacher);
 

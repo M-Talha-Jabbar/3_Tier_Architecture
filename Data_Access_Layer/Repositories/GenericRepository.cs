@@ -20,15 +20,20 @@ namespace Repository.Repositories
             entity = _context.Set<T>();
         }
 
-        public IQueryable<T> GetQuerable() // returning known type
+        public IQueryable<T> GetQuerable() 
         {
-            return entity;
+            return entity; // Since DbSet class is derived from IQuerable so .Net will implicitly converts/casts the 'entity' type from DbSet to IQuerable when returning the 'entity'.
         }
 
-        public IQueryable<I> GetQueryable<I>() where I : class // returning an unknown type
+        public IQueryable<I> GetQueryable<I>() where I : class 
         {
             return _context.Set<I>();
         }
+
+        // Now after adding these GetQuerable() & GetQueryable<I>() methods we don't need Specific Repository for an entity with Generic Repository.
+        // Since we have not used this two methods for Student entity so thats why we needed and created a StudentRepository(i.e. Specific Repository for Student entity).
+        // We have used these two methods in TeacherService which helps us to avoid creating a Specific Repository for Teacher entity.
+
 
         public async Task<List<T>> GetAllAsync()
         {
