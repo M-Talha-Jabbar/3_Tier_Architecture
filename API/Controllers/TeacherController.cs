@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repository.Exceptions;
 using Service.Contracts;
+using System;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -19,13 +21,35 @@ namespace API.Controllers
         [HttpGet("{id}/course")]
         public async Task<IActionResult> GetTeacherCoursesById([FromRoute]int id)
         {
-            return Ok(await _teacherService.GetTeacherCoursesByIdAsync(id));
+            var res = await _teacherService.GetTeacherCoursesByIdAsync(id);
+
+            if(res == null)
+            {
+                return BadRequest($"No such teacher with Teacher ID: {id}");
+            }
+
+            return Ok(res);
         }
 
         [HttpPost("{id}/course")]
         public async Task<IActionResult> AssignTeacherInACourse([FromRoute]int id, [FromForm]int CourseId)
         {
-            await _teacherService.AssignTeacherInACourseAsync(id, CourseId);
+            try
+            {
+                await _teacherService.AssignTeacherInACourseAsync(id, CourseId);
+            }
+            catch(CourseNotPresentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(StudentOrTeacherNotEnrolledException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetTeacherCoursesById", new { id = id }, new { id, CourseId });
         }

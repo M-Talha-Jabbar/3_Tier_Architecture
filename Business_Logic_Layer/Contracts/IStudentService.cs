@@ -16,6 +16,6 @@ namespace Service.Contracts
         Task DeleteStudentAsync(int id);
         Task<List<StudentViewModel>> GetStudentsByNameAsync(string name);
         Task<StudentViewModel> GetStudentCoursesByIdAsync(int id);
-        Task EnrollStudentInACourseAsync(int StudentId, int CourseId);
+        Task<string> EnrollStudentInACourseAsync(int StudentId, int CourseId);
     }
 }

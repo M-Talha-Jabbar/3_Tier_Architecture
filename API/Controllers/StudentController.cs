@@ -19,13 +19,27 @@ namespace API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllStudents()
         {
-            return Ok(await _studentService.GetAllStudentsAsync());
+            var res = await _studentService.GetAllStudentsAsync();
+
+            if(res.Count == 0)
+            {
+                return Ok("Currently there are no students");
+            }
+
+            return Ok(res);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStudentById([FromRoute]int id)
         {
-            return Ok(await _studentService.GetStudentByIdAsync(id));
+            var res = await _studentService.GetStudentByIdAsync(id);
+
+            if(res == null)
+            {
+                return BadRequest($"No such student with Student ID: {id}");
+            }
+
+            return Ok(res);
         }
 
         [HttpPost]
@@ -55,21 +69,35 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStudentsByName([FromQuery]string name)
         {
-            return Ok(await _studentService.GetStudentsByNameAsync(name));
+            var res = await _studentService.GetStudentsByNameAsync(name);
+
+            if(res.Count == 0)
+            {
+                return BadRequest($"No such student with Student Name: {name}");
+            }
+
+            return Ok(res);
         }
 
         [HttpGet("{id}/course")]
         public async Task<IActionResult> GetStudentCoursesById([FromRoute]int id)
         {
-            return Ok(await _studentService.GetStudentCoursesByIdAsync(id));
+            var res = await _studentService.GetStudentCoursesByIdAsync(id);
+
+            if(res == null)
+            {
+                return BadRequest($"No such student with Student ID: {id}");
+            }
+
+            return Ok(res);
         }
 
         [HttpPost("{id}/course")]
         public async Task<IActionResult> EnrollStudentInACourse([FromRoute]int id, [FromForm]int CourseId)
         {
-            await _studentService.EnrollStudentInACourseAsync(id, CourseId);
+            var res = await _studentService.EnrollStudentInACourseAsync(id, CourseId);
 
-            return CreatedAtAction("GetStudentCoursesById", new { id = id }, new { id, CourseId });
+            return CreatedAtAction("GetStudentCoursesById", new { id = id }, new { res });
         }
     }
 }

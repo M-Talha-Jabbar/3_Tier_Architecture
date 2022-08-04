@@ -1,11 +1,11 @@
 ﻿using Repository.Contracts;
+using Repository.Exceptions;
 using Repository.Models;
 using Service.Contracts;
 using Service.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.Services
@@ -36,13 +36,18 @@ namespace Service.Services
         {
             var student = await _studentRepository.GetByIdAsync(id);
 
-            var studentCourses = new StudentViewModel()
+            if(student == null)
+            {
+                return null;
+            }
+
+            var studentData = new StudentViewModel()
             {
                 StudentId = student.StudentId,
                 StudentName = student.StudentName,
             };
 
-            return studentCourses;
+            return studentData;
         }
 
         public async Task<int> AddStudentAsync(StudentViewModel student)
@@ -96,6 +101,11 @@ namespace Service.Services
         {
             var res = await _studentRepository.GetStudentCoursesByIdAsync(id);
 
+            if(res == null)
+            {
+                return null;
+            }
+
             var studentCourses = new StudentViewModel()
             {
                 StudentId = res.StudentId,
@@ -110,11 +120,28 @@ namespace Service.Services
             return studentCourses;
         }
 
-        public async Task EnrollStudentInACourseAsync(int StudentId, int CourseId)
+        public async Task<string> EnrollStudentInACourseAsync(int StudentId, int CourseId)
         {
-            await _studentRepository.RegisterACourseAsync(StudentId, CourseId);
+            try
+            {
+                await _studentRepository.RegisterACourseAsync(StudentId, CourseId);
+            }
+            catch (CourseNotPresentException ex)
+            {
+                return ex.Message;
+            }
+            catch(StudentOrTeacherNotEnrolledException ex)
+            {
+                return ex.Message;
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
 
             await _studentRepository.SaveAsync();
+
+            return $"Student with Id {StudentId} has been enrolled in Course with Id {CourseId}";
         }
     }
 }

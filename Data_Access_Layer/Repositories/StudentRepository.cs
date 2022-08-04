@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
 using Repository.Data;
+using Repository.Exceptions;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,20 @@ namespace Repository.Repositories
         {
             var course = await _context.Courses.FindAsync(CourseId);
 
+            if(course == null)
+            {
+                throw new CourseNotPresentException();
+            }
+
             var student = await _context.Students
                                     .Where(stud => stud.StudentId == StudentId)
                                     .Include(stud => stud.Courses)
                                     .FirstOrDefaultAsync();
+
+            if(student == null)
+            {
+                throw new StudentOrTeacherNotEnrolledException();
+            }
 
             student.Courses.Add(course);
 

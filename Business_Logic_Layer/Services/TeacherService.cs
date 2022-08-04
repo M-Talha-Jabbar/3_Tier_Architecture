@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Contracts;
+using Repository.Exceptions;
 using Repository.Models;
 using Service.Contracts;
 using Service.ViewModels;
@@ -22,16 +23,21 @@ namespace Service.Services
 
         public async Task<TeacherViewModel> GetTeacherCoursesByIdAsync(int id)
         {
-            var res = await _teacherRepository.GetQuerable()
+            var teacher = await _teacherRepository.GetQuerable()
                                             .Where(t => t.TeacherId == id)
                                             .Include(t => t.Courses)
                                             .FirstOrDefaultAsync();
 
+            if(teacher == null)
+            {
+                return null;
+            }
+
             var teacherCourses = new TeacherViewModel()
             {
-                TeacherId = res.TeacherId,
-                TeacherName = res.TeacherName,
-                Courses = res.Courses.Select(c => new CourseViewModel()
+                TeacherId = teacher.TeacherId,
+                TeacherName = teacher.TeacherName,
+                Courses = teacher.Courses.Select(c => new CourseViewModel()
                 {
                     CourseId = c.CourseId,
                     CourseName = c.CourseName
@@ -47,10 +53,14 @@ namespace Service.Services
                                             .Where(c => c.CourseId == CourseId)
                                             .FirstOrDefaultAsync();
 
+            if (course == null) throw new CourseNotPresentException();
+
             var teacher = await _teacherRepository.GetQuerable()
                                             .Where(t => t.TeacherId == TeacherId)
                                             .Include(t => t.Courses)
                                             .FirstOrDefaultAsync();
+
+            if (teacher == null) throw new StudentOrTeacherNotEnrolledException();
 
             teacher.Courses.Add(course);
 
