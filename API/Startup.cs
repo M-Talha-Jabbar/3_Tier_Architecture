@@ -1,23 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Repository.Contracts;
 using Repository.Data;
 using Repository.Repositories;
 using Service.Contracts;
 using Service.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace API
 {
@@ -44,6 +36,8 @@ namespace API
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddSwaggerGen(c =>
             {
