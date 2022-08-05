@@ -44,11 +44,9 @@ namespace API.Controllers
                 return Unauthorized("Wrong Password");
             }
 
-            var jwtToken = _tokenService.CreateToken(loginModel);
-
             var response = new LoginResponseViewModel(
                 username: loginModel.Username,
-                token: jwtToken
+                token: _tokenService.CreateToken(loginModel)
             );
 
             return Ok(response);

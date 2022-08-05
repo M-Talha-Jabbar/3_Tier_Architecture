@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Service.ViewModels;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    [Authorize] // Controller is secured but if you want an action method in it to be access by anyone then simply put [AllowAnonymous] attribute on it.
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -16,6 +18,7 @@ namespace API.Controllers
             _studentService = studentService;
         }
 
+        
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllStudents()
         {
@@ -29,6 +32,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStudentById([FromRoute]int id)
         {
@@ -66,6 +70,7 @@ namespace API.Controllers
             return Ok("Student Deleted Successfully");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetStudentsByName([FromQuery]string name)
         {
@@ -79,6 +84,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}/course")]
         public async Task<IActionResult> GetStudentCoursesById([FromRoute]int id)
         {
