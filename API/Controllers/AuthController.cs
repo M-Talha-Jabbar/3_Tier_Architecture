@@ -44,9 +44,25 @@ namespace API.Controllers
                 return Unauthorized("Wrong Password");
             }
 
+            var accessToken = _tokenService.CreateToken(loginModel); // generating & then returning access/bearer token
+
+
+            // generating & then setting refresh token in HTTP Cookie
+            var user = await _authService.GetUser(loginModel.Username);
+
+            var refreshToken = await _tokenService.GenerateRefreshToken(user.Id);
+
+            var cookieOptions = new CookieOptions()
+            {
+                HttpOnly = true, // cookie now will not be accessible by client-side script (such as JavaScript) or you can say in browser.
+                Expires = refreshToken.TokenExpires
+            };
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+
+
             var response = new LoginResponseViewModel(
                 username: loginModel.Username,
-                token: _tokenService.CreateToken(loginModel)
+                accessToken: accessToken
             );
 
             return Ok(response);

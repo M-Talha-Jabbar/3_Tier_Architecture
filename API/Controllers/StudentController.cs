@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize] // Controller is secured but if you want an action method in it to be access by anyone then simply put [AllowAnonymous] attribute on it.
+    [Authorize(Roles = "Manager Academics")] // Controller is secured but if you want an action method in it to be access by anyone then simply put [AllowAnonymous] attribute on it.
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase

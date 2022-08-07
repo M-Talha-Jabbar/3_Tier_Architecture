@@ -43,17 +43,27 @@ namespace API
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
 
+
+            // validating token
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters()
                         {
                             ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:TokenKey").Value)),
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JWT:SecretKey").Value)),
+                            // We have given the Key for validating token but how does he know that we have used HmacSha512 algorithm for hashing?
+                            // And that is from the Header part of this Bearer Token. The Header part consist of a property named 'alg' that tells which hashing algorithm has been applied on this token.
+
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };
                     });
+            // If your token is not valid, you will get an http response 401 (unauthorized).
+            // If your token is valid, but your role claim (i.e. in payload) doesn't allow you to access a particular route/resource then you will get an http response 403 (forbidden) that means insufficient rights to a resource.
+
+            // What if token is expired?
+            // Is Refresh token will remain safe beacuse with it we will another jwt?
 
             services.AddSwaggerGen(c =>
             {
@@ -61,14 +71,13 @@ namespace API
 
                 // Configuring Authorization with Swagger - Accepting Bearer Token (i.e. in Authentication Header)
                 // Alternative of this could be simply using Postman.
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
                 {
                     Description = "Standard Authorization Header using the Bearer scheme {\"bearer {token}\"}",
                     In = ParameterLocation.Header, // The Locaton of the ApiKey. Valid values are "query", "header", and "cookie".
                     Name = "Authorization", // The name of the query, header or cookie parameter to be used.
                     Type = SecuritySchemeType.ApiKey, // The type of the security scheme. Valid values are "apiKey", "http", "oauth2", "openIdConnect"
                 });
-
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
         }

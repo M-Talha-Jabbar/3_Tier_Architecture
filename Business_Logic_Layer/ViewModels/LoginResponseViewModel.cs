@@ -9,12 +9,12 @@ namespace Service.ViewModels
     public class LoginResponseViewModel
     {
         public string Username { get; }
-        public string Token { get; }
+        public string accessToken { get; }
 
-        public LoginResponseViewModel(string username, string token)
+        public LoginResponseViewModel(string username, string accessToken)
         {
             Username = username;
-            Token = token;
+            this.accessToken = accessToken;
         }
     }
 }
