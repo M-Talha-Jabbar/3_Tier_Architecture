@@ -29,6 +29,7 @@ namespace API.Extensions
                             ValidateAudience = false,
 
                             // validates that the JWT is not expired 
+                            // If your JWT is not valid or it is expired, you will get an http response 401 (unauthorized).
                             ValidateLifetime = true,
                             ClockSkew = TimeSpan.Zero // The default value of ClockSkew is 5 minutes. That means if you haven't set it, your JWT will be valid for Expiry Time + 5 mins.
                             // If you want to expire your JWT on the exact time (i.e. Expiry Time) you will need to set ClockSkew to zero.

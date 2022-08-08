@@ -13,6 +13,7 @@ namespace Service.Contracts
         bool CompareHashes(byte[] hash, byte[] computedHash);
         Task<User> CreatePasswordHash(RegisterRequest registerModel);
         Task<User> GetUser(string username);
+        Task<(LoginResponse, RefreshToken)> Login(LoginRequest loginRequest);
         Task<bool> UserExists(string username);
         Task<bool> VerifyPasswordHash(LoginRequest loginModel);
     }

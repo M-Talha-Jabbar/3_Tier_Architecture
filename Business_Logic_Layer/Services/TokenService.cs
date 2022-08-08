@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repository.Contracts;
 using Repository.Models;
@@ -44,7 +43,7 @@ namespace Service.Services
 
             var tokenDescriptor = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
              );
             // If the header is fixed and the claims(i.e. in payload) are identical between two tokens, then the signature will be identical too, and you can easily get duplicated tokens.

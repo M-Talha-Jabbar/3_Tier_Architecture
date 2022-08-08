@@ -11,11 +11,9 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly ITokenService _tokenService;
-        public AuthController(IAuthService authService, ITokenService tokenService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -44,14 +42,9 @@ namespace API.Controllers
                 return Unauthorized("Wrong Password");
             }
 
-            var accessToken = _tokenService.CreateToken(loginRequest); // generating & then returning access/bearer token
+            var(loginResponse, refreshToken) = await _authService.Login(loginRequest);
 
-
-            // generating & then setting refresh token in HTTP Cookie
-            var user = await _authService.GetUser(loginRequest.Username);
-
-            var refreshToken = await _tokenService.GenerateRefreshToken(user.Id);
-
+            // setting refreshToken in cookie
             var cookieOptions = new CookieOptions()
             {
                 HttpOnly = true, // cookie now will not be accessible by client-side script (such as JavaScript) or you can say in browser.
@@ -59,13 +52,7 @@ namespace API.Controllers
             };
             Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
 
-
-            var response = new LoginResponse(
-                username: loginRequest.Username,
-                accessToken: accessToken
-            );
-
-            return Ok(response);
+            return Ok(loginResponse);
         }
     }
 }

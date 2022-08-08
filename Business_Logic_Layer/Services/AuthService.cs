@@ -13,10 +13,12 @@ namespace Service.Services
     public class AuthService : IAuthService
     {
         private readonly IGenericRepository<User> _userRepository;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(IGenericRepository<User> userRepository)
+        public AuthService(IGenericRepository<User> userRepository, ITokenService tokenService)
         {
             _userRepository = userRepository;
+            _tokenService = tokenService;
         }
 
         public async Task<bool> UserExists(string username)
@@ -35,15 +37,15 @@ namespace Service.Services
             return hash.SequenceEqual(computedHash);
         }
 
-        public async Task<User> CreatePasswordHash(RegisterRequest registerModel)
+        public async Task<User> CreatePasswordHash(RegisterRequest registerRquest)
         {
             var hmac = new HMACSHA512();
 
             var user = new User()
             {
-                Username = registerModel.Username,
+                Username = registerRquest.Username,
                 PasswordSalt = hmac.Key,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerModel.Password))
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerRquest.Password))
             };
 
             _userRepository.Insert(user);
@@ -53,13 +55,13 @@ namespace Service.Services
             return user;
         }
 
-        public async Task<bool> VerifyPasswordHash(LoginRequest loginModel)
+        public async Task<bool> VerifyPasswordHash(LoginRequest loginRequest)
         {
-            var getUser = await GetUser(loginModel.Username);
+            var getUser = await GetUser(loginRequest.Username);
 
             var hmac = new HMACSHA512(getUser.PasswordSalt);
 
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginModel.Password));
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginRequest.Password));
 
             if(CompareHashes(getUser.PasswordHash, computedHash))
             {
@@ -67,6 +69,26 @@ namespace Service.Services
             }
 
             return false;
+        }
+
+        public async Task<(LoginResponse, RefreshToken)> Login(LoginRequest loginRequest)
+        {
+            var accessToken = _tokenService.CreateToken(loginRequest); // generating access/bearer token (JWT)
+
+
+            // generating refresh token and it will be set in HTTP Cookie
+
+            var getUser = await GetUser(loginRequest.Username);
+
+            var refreshToken = await _tokenService.GenerateRefreshToken(getUser.Id);
+
+
+            var loginResponse = new LoginResponse(
+                username: loginRequest.Username,
+                accessToken: accessToken
+            );
+
+            return (loginResponse, refreshToken);
         }
     }
 }
