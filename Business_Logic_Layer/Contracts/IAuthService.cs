@@ -11,9 +11,9 @@ namespace Service.Contracts
     public interface IAuthService
     {
         bool CompareHashes(byte[] hash, byte[] computedHash);
-        Task<User> CreatePasswordHash(RegisterViewModel registerModel);
+        Task<User> CreatePasswordHash(RegisterRequest registerModel);
         Task<User> GetUser(string username);
         Task<bool> UserExists(string username);
-        Task<bool> VerifyPasswordHash(LoginViewModel loginModel);
+        Task<bool> VerifyPasswordHash(LoginRequest loginModel);
     }
 }

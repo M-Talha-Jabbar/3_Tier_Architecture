@@ -35,7 +35,7 @@ namespace Service.Services
             return hash.SequenceEqual(computedHash);
         }
 
-        public async Task<User> CreatePasswordHash(RegisterViewModel registerModel)
+        public async Task<User> CreatePasswordHash(RegisterRequest registerModel)
         {
             var hmac = new HMACSHA512();
 
@@ -53,7 +53,7 @@ namespace Service.Services
             return user;
         }
 
-        public async Task<bool> VerifyPasswordHash(LoginViewModel loginModel)
+        public async Task<bool> VerifyPasswordHash(LoginRequest loginModel)
         {
             var getUser = await GetUser(loginModel.Username);
 

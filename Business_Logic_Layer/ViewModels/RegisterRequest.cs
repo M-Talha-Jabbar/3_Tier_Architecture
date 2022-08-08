@@ -2,7 +2,7 @@
 
 namespace Service.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterRequest
     {
         [Required][MaxLength(20)] public string Username { get; set; }
         [Required][Compare("ConfirmPassword", ErrorMessage = "Passwords don't match")] public string Password { get; set; }

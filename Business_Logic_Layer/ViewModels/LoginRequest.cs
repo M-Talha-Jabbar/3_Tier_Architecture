@@ -2,7 +2,7 @@
 
 namespace Service.ViewModels
 {
-    public class LoginViewModel
+    public class LoginRequest
     {
         [Required][MaxLength(20)] public string Username { get; set; }
         [Required] public string Password { get; set; }

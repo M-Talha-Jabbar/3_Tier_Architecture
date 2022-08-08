@@ -25,11 +25,13 @@ namespace Service.Services
             _configuration = configuration;
             _tokenRepository = tokenRepository;
         }
-        public string CreateToken(LoginViewModel loginModel)
+        public string CreateToken(LoginRequest loginRequest)
         {
+            // Claims are data contained by the JWT. They are information about the user which also helps us to authorize access to a resource.
+            // They could be Username, email address, role, or any other information.
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, loginModel.Username),
+                new Claim(ClaimTypes.Name, loginRequest.Username),
                 // OR
                 // new Claim(JwtRegisteredClaimNames.NameId, loginModel.Username)
 
@@ -42,7 +44,7 @@ namespace Service.Services
 
             var tokenDescriptor = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: creds
              );
             // If the header is fixed and the claims(i.e. in payload) are identical between two tokens, then the signature will be identical too, and you can easily get duplicated tokens.

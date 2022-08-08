@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Service.ViewModels
 {
-    public class LoginResponseViewModel
+    public class LoginResponse
     {
         public string Username { get; }
         public string accessToken { get; }
 
-        public LoginResponseViewModel(string username, string accessToken)
+        public LoginResponse(string username, string accessToken)
         {
             Username = username;
             this.accessToken = accessToken;
