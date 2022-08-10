@@ -10,8 +10,9 @@ namespace Service.Contracts
 {
     public interface ITokenService
     {
-        string CreateToken(LoginRequest loginModel);
+        string CreateAccessToken(User user);
         string GenerateRefreshToken();
         Task<RefreshToken> GenerateRefreshToken(int UserId);
+        Task<RefreshToken> GetRefreshToken(int UserId);
     }
 }

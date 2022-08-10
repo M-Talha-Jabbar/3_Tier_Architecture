@@ -6460,19 +6460,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Huzaifa\\.nuget\\packages\\": {}
+    "C:\\Users\\talha.jabbar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Huzaifa\\Desktop\\3_Tier_Architecture\\API\\API.csproj",
+      "projectUniqueName": "D:\\3_Tier_Architecture\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\Huzaifa\\Desktop\\3_Tier_Architecture\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\Huzaifa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Huzaifa\\Desktop\\3_Tier_Architecture\\API\\obj\\",
+      "projectPath": "D:\\3_Tier_Architecture\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\talha.jabbar\\.nuget\\packages\\",
+      "outputPath": "D:\\3_Tier_Architecture\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Huzaifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\talha.jabbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6486,8 +6486,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Huzaifa\\Desktop\\3_Tier_Architecture\\Business_Logic_Layer\\Service.csproj": {
-              "projectPath": "C:\\Users\\Huzaifa\\Desktop\\3_Tier_Architecture\\Business_Logic_Layer\\Service.csproj"
+            "D:\\3_Tier_Architecture\\Business_Logic_Layer\\Service.csproj": {
+              "projectPath": "D:\\3_Tier_Architecture\\Business_Logic_Layer\\Service.csproj"
             }
           }
         }
@@ -6543,7 +6543,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

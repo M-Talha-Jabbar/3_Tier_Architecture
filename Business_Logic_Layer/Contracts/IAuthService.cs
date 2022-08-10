@@ -12,8 +12,10 @@ namespace Service.Contracts
     {
         bool CompareHashes(byte[] hash, byte[] computedHash);
         Task<User> CreatePasswordHash(RegisterRequest registerModel);
+        Task<RefreshToken> GetRefreshToken(int UserId);
         Task<User> GetUser(string username);
-        Task<(LoginResponse, RefreshToken)> Login(LoginRequest loginRequest);
+        Task<(LoginResponse, RefreshToken)> CreateTokens(LoginRequest loginRequest);
+        Task<(string, RefreshToken)> CreateTokens(int UserId);
         Task<bool> UserExists(string username);
         Task<bool> VerifyPasswordHash(LoginRequest loginModel);
     }
