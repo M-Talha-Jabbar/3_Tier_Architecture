@@ -14,6 +14,5 @@ namespace Service.Contracts
         string GenerateRefreshToken();
         Task<RefreshToken> GenerateRefreshToken(int UserId);
         Task<RefreshToken> GetRefreshToken(int UserId);
-        Task RemoveRefreshToken(int UserId);
     }
 }

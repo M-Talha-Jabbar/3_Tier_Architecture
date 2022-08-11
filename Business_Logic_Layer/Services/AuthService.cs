@@ -75,7 +75,7 @@ namespace Service.Services
         {
             var getUser = await GetUser(loginRequest.Username);
 
-            var accessToken = _tokenService.CreateAccessToken(getUser); // generating access/bearer token (in our case, JWT Token)
+            var accessToken = _tokenService.CreateAccessToken(getUser); // generating access/bearer token (in our case, JWT)
 
             var refreshToken = await _tokenService.GenerateRefreshToken(getUser.Id); // generating refresh token and it will be set in HTTP Cookie
 
@@ -92,7 +92,7 @@ namespace Service.Services
         {
             var getUser = await _userRepository.GetByIdAsync(UserId);
 
-            var accessToken = _tokenService.CreateAccessToken(getUser); // generating access/bearer token (in our case, JWT Token)
+            var accessToken = _tokenService.CreateAccessToken(getUser); // generating access/bearer token (in our case, JWT)
 
             var refreshToken = await _tokenService.GenerateRefreshToken(getUser.Id); // generating refresh token and it will be set in HTTP Cookie
 
@@ -104,11 +104,6 @@ namespace Service.Services
             var refreshToken = await _tokenService.GetRefreshToken(UserId);
 
             return refreshToken;
-        }
-
-        public async Task Logout(int UserId)
-        {
-            await _tokenService.RemoveRefreshToken(UserId);
         }
     }
 }

@@ -98,15 +98,5 @@ namespace Service.Services
             return await _tokenRepository.GetQuerable()//.AsNoTracking()
                                         .FirstOrDefaultAsync(t => t.UserId == UserId);
         }
-
-        public async Task RemoveRefreshToken(int UserId)
-        {
-            var refreshToken = await _tokenRepository.GetQuerable()
-                                        .FirstOrDefaultAsync(t => t.UserId == UserId);
-
-            _tokenRepository.GetEntityOfTypeDbSet().Remove(refreshToken);
-
-            await _tokenRepository.SaveAsync();
-        }
     }
 }
