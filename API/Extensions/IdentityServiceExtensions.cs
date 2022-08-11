@@ -43,7 +43,7 @@ namespace API.Extensions
                 configure.AddPolicy("Trusted", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.RequireRole("HR");
+                    policy.RequireRole("HR"); 
                     policy.RequireClaim("Rights", "Create");
                 });
             });
