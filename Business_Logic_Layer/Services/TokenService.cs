@@ -36,6 +36,9 @@ namespace Service.Services
                 // new Claim(JwtRegisteredClaimNames.NameId, loginModel.Username)
 
                 new Claim(ClaimTypes.Role, "Manager Academics")
+
+                //new Claim(ClaimTypes.Role, "HR"),
+                //new Claim("Rights", "Create")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:SecretKey").Value));

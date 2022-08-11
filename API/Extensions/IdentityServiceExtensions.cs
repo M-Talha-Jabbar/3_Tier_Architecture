@@ -37,6 +37,17 @@ namespace API.Extensions
                     });
             // If your JWT is valid, but your role claim (i.e. in payload) doesn't allow you to access a particular route/resource then you will get an http response 403 (forbidden) that means insufficient rights to a resource.
 
+
+            services.AddAuthorization(configure =>
+            {
+                configure.AddPolicy("Trusted", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("HR");
+                    policy.RequireClaim("Rights", "Create");
+                });
+            });
+
             return services;
         }
     }

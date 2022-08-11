@@ -18,7 +18,7 @@ namespace API.Controllers
             _studentService = studentService;
         }
 
-        
+        [AllowAnonymous]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllStudents()
         {

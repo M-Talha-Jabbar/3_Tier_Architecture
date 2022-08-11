@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Exceptions;
 using Service.Contracts;
@@ -18,6 +18,7 @@ namespace API.Controllers
             _teacherService = teacherService;
         }
 
+        [Authorize(Roles = "HR, Manager Academics")]
         [HttpGet("{id}/course")]
         public async Task<IActionResult> GetTeacherCoursesById([FromRoute]int id)
         {
@@ -31,6 +32,7 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        [Authorize(Policy = "Trusted"/*, Roles = "Manager Academics"*/)]
         [HttpPost("{id}/course")]
         public async Task<IActionResult> AssignTeacherInACourse([FromRoute]int id, [FromForm]int CourseId)
         {
