@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Service.ViewModels
 {
@@ -7,6 +8,7 @@ namespace Service.ViewModels
     {
         public int TeacherId { get; set; }
         [Required] [MaxLength(20)] public string TeacherName { get; set; }
-        public List<CourseViewModel> Courses { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public List<CourseViewModel> Courses { get; set; }
+        // JsonIgnore prevents the property from being serialized or deserialized.
     }
 }

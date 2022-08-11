@@ -20,9 +20,14 @@ namespace Repository.Repositories
             entity = _context.Set<T>();
         }
 
+        public DbSet<T> GetEntityOfTypeDbSet()
+        {
+            return entity;
+        }
+
         public IQueryable<T> GetQuerable() 
         {
-            return entity; // Since DbSet class is derived from IQuerable so .Net will implicitly converts/casts the 'entity' type from DbSet to IQuerable when returning the 'entity'.
+            return entity; // Since DbSet<T> class is derived from IQuerable<T> so .Net will implicitly converts/casts the 'entity' type from DbSet<T> to IQuerable<T> when returning the 'entity'.
         }
 
         public IQueryable<I> GetQueryable<I>() where I : class 

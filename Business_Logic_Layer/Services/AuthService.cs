@@ -105,5 +105,10 @@ namespace Service.Services
 
             return refreshToken;
         }
+
+        public async Task Logout(int UserId)
+        {
+            await _tokenService.RemoveRefreshToken(UserId);
+        }
     }
 }

@@ -18,5 +18,6 @@ namespace Service.Contracts
         Task<(string, RefreshToken)> CreateTokens(int UserId);
         Task<bool> UserExists(string username);
         Task<bool> VerifyPasswordHash(LoginRequest loginModel);
+        Task Logout(int UserId);
     }
 }

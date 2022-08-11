@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace Repository.Contracts
         Task SaveAsync();
         IQueryable<T> GetQuerable();
         IQueryable<I> GetQueryable<I>() where I : class;
+        DbSet<T> GetEntityOfTypeDbSet();
     }
 }

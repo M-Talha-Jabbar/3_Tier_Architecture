@@ -56,10 +56,20 @@ namespace API.Controllers
             return Ok(loginResponse);
         }
 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody]int UserId)
+        {
+            await _authService.Logout(UserId);
+
+            Response.Cookies.Delete("refreshToken");
+
+            return Ok("You have been logged out");
+        }
+
         // If access/bearer token (in our case, JWT Token) is expired, so with valid refresh token you will receive new access & refresh tokens. With this new access token you will be able maintain the user session (that means user will remain logged in).
         // But if the refresh token is also expired then the user will be logged out and have to re-login and go through the usual login process again.
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromForm]int UserId)
+        public async Task<IActionResult> RefreshToken([FromBody]int UserId)
         {
             var refreshToken = Request.Cookies["refreshToken"];
 

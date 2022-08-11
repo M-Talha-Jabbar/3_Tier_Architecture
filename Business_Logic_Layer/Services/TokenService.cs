@@ -44,7 +44,7 @@ namespace Service.Services
 
             var tokenDescriptor = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration.GetSection("JWT:TokenValidityInMinutes").Value)),
                 signingCredentials: creds
              );
             // If the header is fixed and the claims(i.e. in payload) are identical between two tokens, then the signature will be identical too, and you can easily get duplicated tokens.
@@ -77,7 +77,7 @@ namespace Service.Services
             {
                 Token = GenerateRefreshToken(),
                 TokenCreated = DateTime.Now,
-                TokenExpires = DateTime.Now.AddDays(7),
+                TokenExpires = DateTime.Now.AddDays(Convert.ToDouble(_configuration.GetSection("JWT:RefreshTokenValidityInDays").Value)),
                 UserId = UserId
             };
 
@@ -93,11 +93,20 @@ namespace Service.Services
         // In overloading there are only three ways to differentiate methods of the same name: 1) different number of parameters 2) different data types of parameters & 3) different order of parameters 
     
 
-        //public bool CompareRefreshTokens(string )
         public async Task<RefreshToken> GetRefreshToken(int UserId)
         {
-            return await _tokenRepository.GetQuerable().AsNoTracking()
+            return await _tokenRepository.GetQuerable()//.AsNoTracking()
                                         .FirstOrDefaultAsync(t => t.UserId == UserId);
+        }
+
+        public async Task RemoveRefreshToken(int UserId)
+        {
+            var refreshToken = await _tokenRepository.GetQuerable()
+                                        .FirstOrDefaultAsync(t => t.UserId == UserId);
+
+            _tokenRepository.GetEntityOfTypeDbSet().Remove(refreshToken);
+
+            await _tokenRepository.SaveAsync();
         }
     }
 }
