@@ -12,7 +12,7 @@ namespace API.Extensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    // configuring authorization/validation middleware for validating JWT before giving access to a route/resource
+                    // authenticating subsequent request (validating JWT before giving access to a route/resource)
                     .AddJwtBearer(options =>
                     {
                         // here we have specified which parameters must be taken into account to consider JWT as valid
@@ -35,7 +35,8 @@ namespace API.Extensions
                             // If you want to expire your JWT on the exact time (i.e. Expiry Time) you will need to set ClockSkew to zero.
                         };
                     });
-            // If your JWT is valid, but your role claim (i.e. in payload) doesn't allow you to access a particular route/resource then you will get an http response 403 (forbidden) that means insufficient rights to a resource.
+
+            // If your JWT is valid, but your role claim (i.e. in payload) doesn't allow you to access a particular route/resource then you will get an http response 403 (forbidden) (by UseAuthorization() middleware) that means insufficient rights to a resource.
 
 
             services.AddAuthorization(configure =>
@@ -43,10 +44,18 @@ namespace API.Extensions
                 configure.AddPolicy("Trusted", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.RequireRole("HR"); 
-                    policy.RequireClaim("Rights", "Create");
+                    policy.RequireAssertion(context => // RequireAssertion() is used to define Custom Policy Requirement
+                    {
+                        return (context.User.IsInRole("HR") && context.User.HasClaim("Rights", "Create")) || context.User.IsInRole("Manager Academics");
+                    });
+                    //policy.RequireRole("HR")
+                    //policy.RequireClaim("Rights", "Create");
                 });
             });
+
+            // Policy defines a collection of requirements, that the user must satisfy in order to access a resource.
+            // We make policy when we want to filter out the people of a particular role on the basis of their individual claims (not on role claims). OR
+            // Filtering out the people with different roles having overlapping individual claims (i.e. same clamis/rights).
 
             return services;
         }
