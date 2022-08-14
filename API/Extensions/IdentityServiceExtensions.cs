@@ -11,8 +11,8 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    // authenticating subsequent request (validating JWT before giving access to a route/resource)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
+                    // JWT Authentication Handler for authenticating subsequent request (validating JWT before giving access to a route/resource)
                     .AddJwtBearer(options =>
                     {
                         // here we have specified which parameters must be taken into account to consider JWT as valid
@@ -43,11 +43,11 @@ namespace API.Extensions
             {
                 configure.AddPolicy("Trusted", policy =>
                 {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireAssertion(context => // RequireAssertion() is used to define Custom Policy Requirement
+                    policy.RequireAuthenticatedUser(); // similar to adding [Authorize] attribute.
+                    policy.RequireAssertion(context => // RequireAssertion() is used to define Custom Policy Requirement.
                     {
                         return (context.User.IsInRole("HR") && context.User.HasClaim("Rights", "Create")) || context.User.IsInRole("Manager Academics");
-                    });
+                    }); // The custom lambda function must return a true if the policy requirement is satisfied.
                     //policy.RequireRole("HR")
                     //policy.RequireClaim("Rights", "Create");
                 });

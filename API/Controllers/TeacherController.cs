@@ -35,7 +35,7 @@ namespace API.Controllers
 
         [Authorize(Policy = "Trusted"/*, Roles = "Manager Academics"*/)]
         // Mentioning Policy and Role together means AND operator between them and if you do this that means an Identity which fulfills the 'Trusted' Policy & have role Manager Academics can only access this particular action method.
-        // But lets say you want to make this AND to OR. How would you do that? So for this you have to create a Custom Policy Requirement using RequireAssertion() (to define our customized logic) inside AddPolicy() when registering the policy in authorization middleware in order to satisfy business requirement.
+        // But lets say you want to make this AND to OR. How would you do that? So for this you have to Customize Policy Requirement using RequireAssertion() (to define our customized logic in order to satisfy business requirement) inside AddPolicy() when registering the policy.
         [HttpPost("{id}/course")]
         public async Task<IActionResult> AssignTeacherInACourse([FromRoute]int id, [FromForm]int CourseId)
         {
