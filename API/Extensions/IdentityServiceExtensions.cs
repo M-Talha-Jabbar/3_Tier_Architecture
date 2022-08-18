@@ -43,13 +43,15 @@ namespace API.Extensions
             {
                 configure.AddPolicy("Trusted", policy =>
                 {
-                    policy.RequireAuthenticatedUser(); // similar to adding [Authorize] attribute.
+                    policy.RequireAuthenticatedUser(); // similar to adding [Authorize] attribute without specifiying any Policy and Roles on controller or action method.
+                    // [Authorize] attribute without any Policy & Roles specified, just authenticate the subsequent request means whether the User have valid JWT or valid cookie based upon how authentication has been configured.
+
                     policy.RequireAssertion(context => // RequireAssertion() is used to define Custom Policy Requirement.
                     {
                         return (context.User.IsInRole("HR") && context.User.HasClaim("Rights", "Create")) || context.User.IsInRole("Manager Academics");
                     }); // The custom lambda function must return a true if the policy requirement is satisfied.
                     //policy.RequireRole("HR")
-                    //policy.RequireClaim("Rights", "Create");
+                    //policy.RequireClaim("Rights", "Create"); // ClaimType comparison is case in-sensitive where as ClaimValue comparison is case sensitive.
                 });
             });
 
