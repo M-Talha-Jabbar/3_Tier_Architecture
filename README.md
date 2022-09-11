@@ -45,3 +45,11 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - MSET &lt;Key1&gt; &lt;Value1&gt; ... &lt;KeyN&gt; &lt;ValueN&gt;
 - APPEND &lt;Key&gt; &lt;appended-value&gt;
 - RENAME &lt;Key&gt; &lt;new-key-name&gt;
+
+# Redis Cache Functions with .Net 
+1) SetAsync()
+2) GetAsync()
+3) SetStringAsync()
+4) GetStringAsync()
+5) RemoveAsync()
+6) RefreshAsync()
