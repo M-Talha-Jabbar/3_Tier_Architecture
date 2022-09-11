@@ -25,6 +25,8 @@ namespace API
 
             services.AddIdentityServices(Configuration);
 
+            services.AddRedisCacheServices(Configuration);
+
             services.AddSwaggerServices(Configuration);
         }
 

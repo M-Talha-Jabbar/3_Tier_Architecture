@@ -32,6 +32,27 @@ namespace API.Controllers
             return Ok(res);
         }
 
+        // When using Redis Cache with 1 Key (where Key can contain N number of records) - aka Project Based Implementation of Redis Cache
+        /*
+        [HttpPost("RefreshSlidingExpirationTimeInRedisCache")]
+        public async Task<IActionResult> RefreshSlidingExpirationTimeInRedisCache()
+        {
+            await _studentService.RefreshSlidingExpirationTimeInRedisCache();
+
+            return Ok($"Sliding Expiration Time of Key 'Master' in Redis Cache has been refreshed");
+        }
+        */
+
+        // User Based Implementation of Redis Cache (where there will be a unique key for each student in Redis Cache for caching each student data)
+        [HttpPost("RefreshSlidingExpirationTimeInRedisCache/{StudentId}")]
+        public async Task<IActionResult> RefreshSlidingExpirationTimeInRedisCache([FromRoute]int StudentId)
+        {
+            await _studentService.RefreshSlidingExpirationTimeInRedisCache(StudentId);
+
+            return Ok($"Sliding Expiration Time of Key 'StudentID:{StudentId}' in Redis Cache has been refreshed");
+        }
+
+
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStudentById([FromRoute]int id)
@@ -47,7 +68,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody]StudentViewModel student)
+        public async Task<IActionResult> AddStudent([FromForm]StudentViewModel student)
         {
             var studentId = await _studentService.AddStudentAsync(student);
 
@@ -55,7 +76,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudent([FromRoute]int id, [FromBody]StudentViewModel student)
+        public async Task<IActionResult> UpdateStudent([FromRoute]int id, [FromForm]StudentViewModel student)
         {
             await _studentService.UpdateStudentAsync(id, student);
 

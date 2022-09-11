@@ -10,6 +10,9 @@ namespace Service.Contracts
     public interface IStudentService
     {
         Task<List<StudentViewModel>> GetAllStudentsAsync();
+
+        //Task RefreshSlidingExpirationTimeInRedisCache();
+        Task RefreshSlidingExpirationTimeInRedisCache(int id);
         Task<StudentViewModel> GetStudentByIdAsync(int id);
         Task<int> AddStudentAsync(StudentViewModel student);
         Task UpdateStudentAsync(int id, StudentViewModel student);
