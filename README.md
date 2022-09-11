@@ -47,8 +47,8 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - RENAME &lt;Key&gt; &lt;new-key-name&gt;
 
 # Redis Cache Functions with .Net 
-1) Set, SetAsync() - Accepts a string key and value and sets it to the cache server. These methods add an item as byte [](array) to the cache using a key. 
-2) Get, GetAsync() - Gets the value from the cache server based on the string key. These methods accept a key and retrieve a cached item as a byte [](array). 
+1) Set, SetAsync() - Accepts a string key and value and sets it to the cache server. These methods add an item as byte \[\](array) to the cache using a key. 
+2) Get, GetAsync() - Gets the value from the cache server based on the string key. These methods accept a key and retrieve a cached item as a byte \[\](array). 
 3) SetString, SetStringAsync()
 4) GetString, GetStringAsync()
 5) Remove, RemoveAsync()
