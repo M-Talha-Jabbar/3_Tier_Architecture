@@ -52,4 +52,4 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 3) SetStringAsync()
 4) GetStringAsync()
 5) RemoveAsync()
-6) RefreshAsync()
+6) RefreshAsync() - Refreshes Sliding Expiration Time
