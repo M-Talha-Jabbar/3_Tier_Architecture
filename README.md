@@ -45,6 +45,7 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - MSET &lt;Key1&gt; &lt;Value1&gt; ... &lt;KeyN&gt; &lt;ValueN&gt;
 - APPEND &lt;Key&gt; &lt;appended-value&gt;
 - RENAME &lt;Key&gt; &lt;new-key-name&gt;
+- DUMP &lt;Key&gt; (returns a serialized version of the value stored at the specified key)
 
 # IDistributedCache interface in .Net
 This is the interface you need, to access the distributed cache objects. IDistributedCache Interface provides you with the following methods to perform actions on the actual cache:
