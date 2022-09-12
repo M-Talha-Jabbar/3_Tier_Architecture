@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Service.Services
+namespace Service.Services // Cache-Aside Pattern (one of the Caching Patterns/Policies) is used.
 {
     // Using Redis Cache with 1 Key (where Key can contain N number of records) - aka Project Based Implementation of Redis Cache
     /*

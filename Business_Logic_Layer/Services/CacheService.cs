@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Services
+namespace Service.Services // Cache-Aside Pattern (one of the Caching Patterns/Policies) is used.
 {
     public class CacheService : ICacheService
     {
@@ -29,7 +29,7 @@ namespace Service.Services
                 return data;
             }
 
-            return default(T);
+            return default(T); // default() produces the default value of a type. Here it will produce null.
         }
 
         public async Task RemoveData(string key)
@@ -47,6 +47,8 @@ namespace Service.Services
                                                                                     // Note that Sliding Expiration should always be set lower than the Absolute Expiration.
 
             await _distributedCache.SetStringAsync(key, SerializedData, option);
+
+            // Since we have stored the data in serialized form, so to get access to this data from redis-cli use (DUMP <Key>) command.
         }
 
         public async Task RefreshSlidingExpirationTime(string key)
