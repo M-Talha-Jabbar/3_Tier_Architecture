@@ -46,10 +46,18 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - APPEND &lt;Key&gt; &lt;appended-value&gt;
 - RENAME &lt;Key&gt; &lt;new-key-name&gt;
 
-# Redis Cache Functions with .Net 
+# IDistributedCache interface in .Net
+This is the interface you need, to access the distributed cache objects. IDistributedCache Interface provides you with the following methods to perform actions on the actual cache:
 1) Set, SetAsync() - Accepts a string key and value and sets it to the cache server. These methods add an item as byte \[\](array) to the cache using a key. 
 2) Get, GetAsync() - Gets the value from the cache server based on the string key. These methods accept a key and retrieve a cached item as a byte \[\](array). 
 3) SetString, SetStringAsync()
 4) GetString, GetStringAsync()
 5) Remove, RemoveAsync()
-6) Refresh, RefreshAsync() - Refreshes Sliding Expiration Time
+6) Refresh, RefreshAsync() - Refreshes Sliding Expiration Time.
+
+We have used <b>Microsoft.Extensions.Caching.StackExchangeRedis</b> implementation for IDistributed interface.
+
+# Eager vs Lazy Approach for refreshing the data in Cache
+![Capture](https://user-images.githubusercontent.com/76180043/189633119-09b0b7ff-ef2e-42c1-bb6f-3cae3d060f54.PNG)
+
+We have used <b>Lazy Approach.</b>
