@@ -34,9 +34,9 @@ namespace Service.Services
         //    // First checking if data is present in Redis Cache
         //    if(EncodedList != null) // if it is true than that means Key with name 'Master' is present in our Redis Cache.
         //    {
-        //        var DeserializeList = Encoding.UTF8.GetString(EncodedList);
+        //        var DeserializedList = Encoding.UTF8.GetString(EncodedList);
 
-        //        var students = JsonConvert.DeserializeObject<List<StudentViewModel>>(DeserializeList);
+        //        var students = JsonConvert.DeserializeObject<List<StudentViewModel>>(DeserializedList);
 
         //        return students;
         //    }
@@ -52,8 +52,8 @@ namespace Service.Services
         //        }).ToList();
 
         //        // Setting/Inserting data in Redis Cache
-        //        var SerializeList = JsonConvert.SerializeObject(students);
-        //        EncodedList = Encoding.UTF8.GetBytes(SerializeList);
+        //        var SerializedList = JsonConvert.SerializeObject(students);
+        //        EncodedList = Encoding.UTF8.GetBytes(SerializedList);
 
         //        var option = new DistributedCacheEntryOptions()
         //                                .SetSlidingExpiration(TimeSpan.FromMinutes(20))
@@ -69,12 +69,12 @@ namespace Service.Services
         // With SetStringAsync() & GetStringAsync() Redis Cache Functions
         public async Task<List<StudentViewModel>> GetAllStudentsAsync()
         {
-            var DeserializeList = await _distributedCache.GetStringAsync(KeyName);
+            var DeserializedList = await _distributedCache.GetStringAsync(KeyName);
 
             // First checking if data is present in Redis Cache
-            if (DeserializeList != null) // if it is true than that means Key with name 'Master' is present in our Redis Cache.
+            if (DeserializedList != null) // if it is true than that means Key with name 'Master' is present in our Redis Cache.
             { 
-                var students = JsonConvert.DeserializeObject<List<StudentViewModel>>(DeserializeList);
+                var students = JsonConvert.DeserializeObject<List<StudentViewModel>>(DeserializedList);
 
                 return students;
             }
@@ -90,13 +90,13 @@ namespace Service.Services
                 }).ToList();
 
                 // Setting/Inserting data in Redis Cache
-                var SerializeList = JsonConvert.SerializeObject(students);
+                var SerializedList = JsonConvert.SerializeObject(students);
 
                 var option = new DistributedCacheEntryOptions()
                                         .SetSlidingExpiration(TimeSpan.FromMinutes(20))
                                         .SetAbsoluteExpiration(TimeSpan.FromHours(6));
 
-                await _distributedCache.SetStringAsync(KeyName, SerializeList, option);
+                await _distributedCache.SetStringAsync(KeyName, SerializedList, option);
 
                 return students;
             }
@@ -232,12 +232,12 @@ namespace Service.Services
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
-        private readonly IDistributedCache _distributedCache;
+        private readonly ICacheService _cacheService;
 
-        public StudentService(IStudentRepository studentRepository, IDistributedCache distributedCache)
+        public StudentService(IStudentRepository studentRepository, ICacheService cacheService)
         {
             _studentRepository = studentRepository;
-            _distributedCache = distributedCache;
+            _cacheService = cacheService;
         }
 
         public async Task<List<StudentViewModel>> GetAllStudentsAsync()
@@ -255,19 +255,17 @@ namespace Service.Services
 
         public async Task RefreshSlidingExpirationTimeInRedisCache(int id)
         {
-            await _distributedCache.RefreshAsync($"StudentID:{id}"); // Reset Sliding Expiration Time if Key is present in Redis Cache
+            await _cacheService.RefreshSlidingExpirationTime($"StudentID:{id}");
         }
 
         public async Task<StudentViewModel> GetStudentByIdAsync(int id)
         {
-            var DeserializeString = await _distributedCache.GetStringAsync($"StudentID:{id}");
+            var cacheData = await _cacheService.GetData<StudentViewModel>($"StudentID:{id}");
 
             // First checking if data is present in Redis Cache
-            if (DeserializeString != null) // if it is true than that means Key with name 'Master' is present in our Redis Cache.
+            if (cacheData != null)
             {
-                var studentData = JsonConvert.DeserializeObject<StudentViewModel>(DeserializeString);
-
-                return studentData;
+                return cacheData;
             }
 
             else
@@ -286,14 +284,7 @@ namespace Service.Services
                 };
 
                 // Setting/Inserting data in Redis Cache
-                var SerializeString = JsonConvert.SerializeObject(studentData);
-
-                var option = new DistributedCacheEntryOptions()
-                                        .SetSlidingExpiration(TimeSpan.FromMinutes(20)) // Cached object expires if it not being requested for a defined amount of time period.
-                                        .SetAbsoluteExpiration(TimeSpan.FromHours(6)); // Expiration time of the cached object.
-                                        // Note that Sliding Expiration should always be set lower than the Absolute Expiration.
-
-                await _distributedCache.SetStringAsync($"StudentID:{id}", SerializeString, option);
+                await _cacheService.SetData<StudentViewModel>($"StudentID:{id}", studentData, TimeSpan.FromMinutes(20), TimeSpan.FromHours(6));
 
                 return studentData;
             }
@@ -327,7 +318,15 @@ namespace Service.Services
 
             await _studentRepository.SaveAsync();
 
-            await _distributedCache.RemoveAsync($"StudentID:{id}");
+            await _cacheService.RemoveData($"StudentID:{id}");
+
+            // Now question arises that after invalidating the Cache or Cache Eviction, when exactly to refresh the data in the Cache with fresh data?:
+            // Should we do it just after the invalidation? "Eager"
+            // Or should we do it whenever the data is being retrieved? "Lazy"
+
+            // So here we have used Lazy approach. How?
+            // Not setting the updated student data immediately into cache after removing the old student data from it.
+            // The updated student data will be inserted into the cache when it will be requested (see GetStudentByIdAsync()).
         }
 
         public async Task DeleteStudentAsync(int id)
@@ -336,7 +335,7 @@ namespace Service.Services
 
             await _studentRepository.SaveAsync();
 
-            await _distributedCache.RemoveAsync($"StudentID:{id}");
+            await _cacheService.RemoveData($"StudentID:{id}");
         }
 
         public async Task<List<StudentViewModel>> GetStudentsByNameAsync(string name)

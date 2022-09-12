@@ -6535,19 +6535,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Huzaifa\\.nuget\\packages\\": {}
+    "C:\\Users\\talha.jabbar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\Service.csproj",
+      "projectUniqueName": "D:\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\Service.csproj",
       "projectName": "Service",
-      "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\Service.csproj",
-      "packagesPath": "C:\\Users\\Huzaifa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\obj\\",
+      "projectPath": "D:\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\Service.csproj",
+      "packagesPath": "C:\\Users\\talha.jabbar\\.nuget\\packages\\",
+      "outputPath": "D:\\WebAPIs-JWT-Asp.NetCore5\\Business_Logic_Layer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Huzaifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\talha.jabbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6561,8 +6561,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-JWT-Asp.NetCore5\\Data_Access_Layer\\Repository.csproj": {
-              "projectPath": "C:\\Users\\Huzaifa\\Desktop\\WebAPIs-JWT-Asp.NetCore5\\Data_Access_Layer\\Repository.csproj"
+            "D:\\WebAPIs-JWT-Asp.NetCore5\\Data_Access_Layer\\Repository.csproj": {
+              "projectPath": "D:\\WebAPIs-JWT-Asp.NetCore5\\Data_Access_Layer\\Repository.csproj"
             }
           }
         }
@@ -6597,7 +6597,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Contracts;
+using Service.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddRedisCacheServices(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDistributedRedisCache(options =>
+            services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetSection("RedisCache:URL").Value;
             });
+
+            services.AddScoped<ICacheService, CacheService>();
 
             return services;
         }
