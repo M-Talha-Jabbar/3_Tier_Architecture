@@ -21,7 +21,7 @@ namespace API.Controllers
             _teacherService = teacherService;
         }
 
-        // Pagination
+        // Pagination (using Page-based Pagination(aka Offset-based Pagination))
         [AllowAnonymous]
         [HttpGet("GetAll")]
         public IActionResult GetAllTeachers([FromQuery]PagedRequest pagedRequest)
