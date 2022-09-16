@@ -7,19 +7,19 @@
 - Built-in Replication (Master-Slave Replication feature).
 ![1](https://user-images.githubusercontent.com/76180043/189301670-2ee66b2e-db35-41a9-9da5-7554794beed4.PNG)
 
-# Reasons to Do Caching
+### Reasons to Do Caching
 - Reducing Network Calls: By putting commonly used data in Cache.
 - Avoiding Recomputations: For example, calculating average price of a thing only once and then storing it in Cache. So everytime a user request for that average price, just directly return it from Cache without fetching the required data again from DB and then recomputing it and then sending it to user. <br><br>
 These two are the key reasons we do caching which eventually <b>reduces the load on DB</b> and also <b>speed-up the responses</b>.
 
-# Redis Datatypes
+### Redis Datatypes
 1) Strings
 2) Lists
 3) Sets
 4) Sorted Sets
 5) Hashes (similar to like JS object or JSON)
 
-# Features of Redis
+### Features of Redis
 - Very Flexible.
 - No Schemas & Column Names.
 - Very Fast: Can perform around 110,000 SETs per second, and about 81,000 GETs per second.
@@ -29,7 +29,7 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - Pipelining: You can cluster multiple commands and send them at once. So it makes Redis even more faster.
 - Redis is a multi-model database supporting variety of different database paradigms with add-on modules that you can opt into as needed. For example, use a RedisJSON module which is a real-time document store just like a document-oriented database like MongoDB, use RedisSearch to turn your database into full text search engine, etc.
 
-# Basic Commands
+### Basic Commands
 - SET &lt;Key&gt; &lt;Value&gt;
 - GET &lt;Key&gt;
 -INCR &lt;Key&gt;
@@ -47,7 +47,7 @@ These two are the key reasons we do caching which eventually <b>reduces the load
 - RENAME &lt;Key&gt; &lt;new-key-name&gt;
 - DUMP &lt;Key&gt; (returns a serialized version of the value stored at the specified key)
 
-# IDistributedCache interface in .Net
+### IDistributedCache interface in .Net
 This is the interface you need, to access the distributed cache objects. IDistributedCache Interface provides you with the following methods to perform actions on the actual cache:
 1) Set, SetAsync() - Accepts a string key and value and sets it to the cache server. These methods add an item as byte \[\](array) to the cache using a key. 
 2) Get, GetAsync() - Gets the value from the cache server based on the string key. These methods accept a key and retrieve a cached item as a byte \[\](array). 
@@ -58,7 +58,16 @@ This is the interface you need, to access the distributed cache objects. IDistri
 
 We have used <b>Microsoft.Extensions.Caching.StackExchangeRedis</b> implementation for IDistributed interface.
 
-# Eager vs Lazy Approach for refreshing the data in Cache
+### Eager vs Lazy Approach for refreshing the data in Cache
 ![Capture](https://user-images.githubusercontent.com/76180043/189633119-09b0b7ff-ef2e-42c1-bb6f-3cae3d060f54.PNG)
 
 We have used <b>Lazy Approach.</b>
+
+# Pagination - Why is it Important?
+Imagine you have an endpoint in your API that could potentially return millions of records with a single request. Let’s say there are 100s of users that are going to exploit this endpoint by requesting all the data in a single go at the same time. This would nearly kill your server and lead to several issues including security. An ideal API endpoint would allow it’s consumers to get only a specific number of records in one go. In this way, we are not giving load to our Database Server, the CPU on which the API is hosted, or the network bandwidth. This is a highly crucial feature for any API, especially the public APIs.
+
+Paging or Pagination in a method in which you get paged response. This means that you request with a page number and page size, and the ASP.NET Core WebApi returns exactly what you asked for, nothing more.
+
+By implementing Pagination in your APIs, your Front end Developers would have a really comfortable time in building UIs that do not lag. Such APIs are good for integration by other consumers (MVC, React.js Applications) as the data already comes paginated.
+
+It results in a system where the client is not overworked while processing the huge set of data thrown at it and the server is not overworked while processing the huge dataset to be passed down to the client. The page size is kept at optimal so that the server can process quickly and the client can receive it without stressing the channel. <b>Pagination is more of a design choice than a functionality</b>.
