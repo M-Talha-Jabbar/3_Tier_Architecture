@@ -3,7 +3,9 @@ using Repository.Contracts;
 using Repository.Exceptions;
 using Repository.Models;
 using Service.Contracts;
+using Service.Models;
 using Service.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +18,30 @@ namespace Service.Services
         public TeacherService(IGenericRepository<Teacher> teacherRepository)
         {
             _teacherRepository = teacherRepository;
+        }
+
+        public (object, List<TeacherViewModel>) GetAllTeachersAsync(int pageNumber, int pageSize)
+        {
+            var res = PagedList<Teacher>.ToPagedList(_teacherRepository.GetQuerable(), pageNumber, pageSize);
+
+            var metadata = new
+            {
+                res.CurrentPage,
+                res.TotalPages,
+                res.PageSize,
+                res.TotalCount,
+                res.HasNext,
+                res.HasPrevious,
+            };
+
+            var pagedTeachersList = res.Select(t => new TeacherViewModel()
+            {
+                TeacherId = t.TeacherId,
+                TeacherName = t.TeacherName,
+            }).ToList();
+            
+
+            return (metadata, pagedTeachersList);
         }
 
         public async Task<TeacherViewModel> GetTeacherCoursesByIdAsync(int id)

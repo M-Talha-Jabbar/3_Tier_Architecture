@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Repository.Exceptions;
 using Service.Contracts;
+using Service.ViewModels;
 using System;
 using System.Threading.Tasks;
 
@@ -17,6 +19,23 @@ namespace API.Controllers
         public TeacherController(ITeacherService teacherService)
         {
             _teacherService = teacherService;
+        }
+
+        // Pagination
+        [AllowAnonymous]
+        [HttpGet("GetAll")]
+        public IActionResult GetAllTeachers([FromQuery]PagedRequest pagedRequest)
+        {
+            var (metadata, list) = _teacherService.GetAllTeachersAsync(pagedRequest.PageNumber, pagedRequest.PageSize);
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            if(list.Count == 0)
+            {
+                return Ok("No more teachers data");
+            }
+
+            return Ok(list);
         }
 
         [Authorize(Roles = "HR, Manager Academics")] // Either this action method can be access by the Identity with role HR OR Manager Academics.

@@ -1,4 +1,6 @@
-﻿using Service.ViewModels;
+﻿using Service.Models;
+using Service.Services;
+using Service.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,6 @@ namespace Service.Contracts
     {
         Task AssignTeacherInACourseAsync(int TeacherId, int CourseId);
         Task<TeacherViewModel> GetTeacherCoursesByIdAsync(int id);
+        (object, List<TeacherViewModel>) GetAllTeachersAsync(int pageNumber, int pageSize);
     }
 }
