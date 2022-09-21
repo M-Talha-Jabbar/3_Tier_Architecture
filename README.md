@@ -1,4 +1,6 @@
 # Redis
+<b>Note: In this project we have used Redis as Cache.</b>
+
 - Open source in-memory data structure store which can be used as a Caching System or full fledged Database or Message Broker.
 ![Capture](https://user-images.githubusercontent.com/76180043/189323592-41445b92-8db9-44de-b956-f6c51cd16970.PNG)
 ![Capture](https://user-images.githubusercontent.com/76180043/189374973-f9bd6035-287c-4359-90a7-9b0e8a1be83c.PNG)
